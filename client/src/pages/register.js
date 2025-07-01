@@ -1,9 +1,21 @@
 import { Form, Input } from 'antd'
 import React from 'react'
 import { Button } from 'antd'
+import axios from 'axios';
+import toast from 'react-hot-toast';    // pop for success and error messages 
 
-const onFinish = (values) => {
-  console.log('Success:', values); 
+const onFinish = async(values) => {
+  try {
+    const response = await axios.post('/api/user/register', values);
+    if (response.data.success) {
+      toast.success(response.data.message);
+    } 
+    else {
+      toast.error(response.data.message);
+    }
+  } catch (error) {
+    toast.error('Registration failed. Please try again.');
+  } 
 };
 
 function Register() {
@@ -17,7 +29,7 @@ function Register() {
           <Form.Item label='Name' name='name'> 
             <Input placeholder='Enter your name'/>
           </Form.Item>
-          <Form.Item label='Email' name='Email'> 
+          <Form.Item label='Email' name='email'> 
             <Input placeholder='Enter your Email'/>
           </Form.Item>
           <Form.Item label='Password' name='password'> 
@@ -37,4 +49,4 @@ function Register() {
   )
 }
 
-export default Register
+export default Register;
