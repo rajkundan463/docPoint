@@ -4,14 +4,15 @@
 
 const express = require('express');
 const router = express.Router();
-const user = require("../model/userModel");
+const User = require("../model/userModel");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // Route for user registration
 router.post('/register', async(req, res) => {
     try {
         // Check if user already exists
-        const existingUser = await user.findOne({ email: req.body.email });
+        const existingUser = await User.findOne({ email: req.body.email });
         if (existingUser) { 
              return res.status(200).send({ message: "User already exists", success: false });
         }
@@ -27,10 +28,11 @@ router.post('/register', async(req, res) => {
         delete req.body.confirmPassword; // Do not store confirmPassword
 
         // Create a new user with complete details
-        const newUser = new user(req.body);
+        const newUser = new User(req.body);
         await newUser.save();
         res.status(200).send({ message: "User registered successfully", success: true});
     } catch (error) {
+        console.error('Registration error:', error); // Handle any errors that occur during registration
         res.status(500).send({ message: 'Server error',success:false, error });
     }
 });
@@ -38,17 +40,21 @@ router.post('/register', async(req, res) => {
 // Route for user login
 router.post('/login', async(req, res) => {
     try {
-        const { email, password } = req.body;
-        const foundUser = await user.findOne({ email });
-        if (!foundUser) {
-            return res.status(201).send({ message: 'Invalid credentials', success: false });
+        const user = await User.findOne({ email:req.body.email });
+        if (!user) {
+            return res.status(200).send({ message: 'No User Found', success: false });
         }
-        const isMatch = await bcrypt.compare(password, foundUser.password);
+        // Check if the password matches
+        const isMatch = await bcrypt.compare(req.body.password, user.password);
         if (!isMatch) {
-            return res.status(201).send({ message: 'Invalid credentials', success: false });
+            return res.status(200).send({ message: 'Wrong Password', success: false });
+        } else {
+            // Generate JWT token
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+            res.status(200).send({ message: 'Login successful', success: true, data:token});
         }
-        res.status(200).send({ message: 'Login successful', success: true, user: foundUser });
     } catch (error) {
+        console.error('Login error:', error); // Handle any errors that occur during login
         res.status(500).send({ message: 'Server error', error });
     }
 });
