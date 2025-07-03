@@ -15,7 +15,7 @@ const onFinish = async(values) => {
       toast.success(response.data.message);
       toast("Redirecting to Home page..."); // redirect to login page after successful registration
       localStorage.setItem('token', response.data.data); // store token in local storage
-      navigate('/');
+      navigate('/home');
     } 
     else {
       toast.error(response.data.message);

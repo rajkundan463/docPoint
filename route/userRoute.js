@@ -7,6 +7,7 @@ const router = express.Router();
 const User = require("../model/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware/authMiddleware");
 
 // Route for user registration
 router.post('/register', async(req, res) => {
@@ -56,6 +57,26 @@ router.post('/login', async(req, res) => {
     } catch (error) {
         console.error('Login error:', error); // Handle any errors that occur during login
         res.status(500).send({ message: 'Server error', error });
+    }
+});
+
+// Route to get user info by ID  & authenticatation to home
+router.post('/get-user-info-by-id', authMiddleware, async(req, res) => {
+
+    try {
+        const user = await User.findOne({ _id: req.body.userId});
+        if (!user) {
+            return res.status(200).send({ message: 'User not found', success: false });
+        }
+        else{
+            res.status(200).send({ success: true, data:{
+                name: user.name,
+                email: user.email,
+            }});
+        }
+
+    } catch (error) {
+        res.status(500).send({ message: 'user getting error auth', success: false, error });
     }
 });
 

@@ -4,6 +4,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Register from './pages/register';
+import Home from './pages/home'; // Assuming you have a Home component
 import { Toaster } from 'react-hot-toast'; // for success and error messages
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
           <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/' element={<home/>} />
+          <Route path='/home' element={<Home/>} />
 
         </Routes>
       </BrowserRouter>
