@@ -4,12 +4,17 @@ import { Button } from 'antd'
 import axios from 'axios';
 import toast from 'react-hot-toast';    // pop for success and error messages and for negivation
 import { Link ,useNavigate } from 'react-router-dom'; // for navigation after successful registration
+import {useDispatch} from 'react-redux'; // for dispatching actions
+import { showLoading, hideLoading } from '../redux/alertSlices'; // for showing and hiding loading state
 
 function Register() {
+const dispatch = useDispatch();
 const navigate = useNavigate();
 const onFinish = async(values) => {
   try {
+    dispatch(showLoading()); // show loading spinner
     const response = await axios.post('/api/user/register', values);
+    dispatch(hideLoading()); // hide loading spinner
     if (response.data.success) {
       toast.success(response.data.message);
       toast("Redirecting to login page..."); // redirect to login page after successful registration
@@ -19,7 +24,8 @@ const onFinish = async(values) => {
       toast.error(response.data.message);
     }
   } catch (error) {
-    toast.error("Something went wrong!");
+  dispatch(hideLoading());
+  toast.error("Something went wrong!");
   } 
 };
 
