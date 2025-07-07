@@ -31,9 +31,9 @@ const onFinish = async(values) => {
   toast.error("Something went wrong!");
   } 
 };
-
   return (
       <div className='authentication'>
+        
         <div className='authentication-form card p-2'>
         <h1 className='card-title'> Welcome Back </h1>
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import Layout from '../components/Layout';
 
 function Home() {
   //  an API call to fetch user data 
@@ -21,10 +22,10 @@ function Home() {
 
 
   return (
-    <div>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the home page of your application.</p>
-    </div>
+    <Layout>
+       <h1>Home Page</h1>
+      </Layout>
+      
   )
 }
 
