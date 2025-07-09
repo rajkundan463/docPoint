@@ -1,10 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {alertSlices} from './alertSlices';
 import { combineReducers } from 'redux';
+import { userSlice } from './userSlices';
 
 const rootReducer = combineReducers({
   alerts: alertSlices.reducer, // use 'alerts' to match useSelector
-    // Add other slices here as needed
+   user : userSlice.reducer,
 });
 export const store = configureStore({
   reducer: rootReducer,

@@ -98,7 +98,7 @@ function Layout({ children }) {
                                 </div>
                             );
                         })}
-                         <div className='d-flex menu-item logout' onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                        <div className='d-flex menu-item logout' onClick={handleLogout} style={{ cursor: 'pointer' }}>
                             <i className='ri-logout-circle-line' style={{ color: 'white' }}></i>
                             {!collapsed && <span style={{ color: 'white' }}>Logout</span>}
                         </div>
@@ -108,7 +108,7 @@ function Layout({ children }) {
 
 
 
-                
+
                 <div className="content">
                     <div className="header">
                         {collapsed ? (
@@ -122,7 +122,7 @@ function Layout({ children }) {
                         )}
 
                         <div className='d-flex align-items-center px-4'>
-                            <Badge count={user?.unseenNotifications.length} onClick={() => navigate('/notifications')}>
+                            <Badge count={user?.unseenNotifications?.length || 0} onClick={() => navigate('/notifications')}>
                                 <i className='ri-notification-line header-action-icon px-3'></i>
                             </Badge>
                             {!user?.isAdmin ? (

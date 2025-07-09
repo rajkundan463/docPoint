@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast'; // for success and error messages
 import { useSelector } from 'react-redux'; // for accessing the Redux store
 import PublicRoute from './components/PublicRoute';
 import ProtectedRoute from './components/ProtectedRoute';
+import ApplyDoctor from './pages/ApplyDoctor';
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -23,6 +24,9 @@ function App() {
           <Route path='/login' element={<PublicRoute><Login/></PublicRoute>} />
           <Route path='/register' element={<PublicRoute><Register/></PublicRoute>} />
           <Route path='/home' element={<ProtectedRoute><Home/></ProtectedRoute>} />
+          
+          <Route path='/apply-doctor' element={<ProtectedRoute><ApplyDoctor/></ProtectedRoute>} />
+
 
         </Routes>
       </BrowserRouter>

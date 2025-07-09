@@ -5,6 +5,9 @@
 }
 
 /* antd override*/
+.ant-picker-input input {
+  border : none !important;
+}
 input {
   border-radius: 0 !important;
   border : 1px solid gray !important;
@@ -152,4 +155,5 @@ label {
   margin-left: -40px;
   border-bottom-left-radius: 10px;
 } 
-/*extra*/
+/*for layout page */
+
