@@ -4,10 +4,10 @@
   "description": "Full-stack DocPoint application (Express + React)",
   "main": "server.js",
   "scripts": {
-  "start": "node server.js",
-  "dev": "nodemon server.js",
-  "build": "npm run build --prefix client && cp -r client/build ./"
-},
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "npm run build --prefix frontend"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
