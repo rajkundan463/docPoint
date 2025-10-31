@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { hideLoading, showLoading } from '../redux/alertSlices';
+import { hideLoading, showLoading } from '../redux/alertsSlice';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -33,7 +33,7 @@ function ApplyDoctor() {
             if (response.data.success) {
                 toast.success(response.data.message);
                 toast("Redirecting to Home page");
-                navigate("/home");
+                navigate("/");
             } else {
                 toast.error(response.data.message);
             }
@@ -48,7 +48,7 @@ function ApplyDoctor() {
         <Layout>
             <h1 className='page-title'>Apply Doctor</h1>
             <hr />
-            <DoctorForm onFinish={onFinish} > </DoctorForm>
+            <DoctorForm onFinish={onFinish} />
         </Layout>
     );
 }

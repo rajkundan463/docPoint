@@ -3,8 +3,8 @@ import { Navigate, useNavigate} from 'react-router-dom';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { setUser } from '../redux/userSlices';
-import { hideLoading, showLoading } from '../redux/alertSlices';
+import { setUser } from '../redux/userSlice';
+import { hideLoading, showLoading } from '../redux/alertsSlice';
 
 
 function ProtectedRoute(props) {

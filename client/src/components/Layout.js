@@ -3,11 +3,11 @@ import "../layout.css";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Badge } from 'antd';
-import { resetUser } from '../redux/userSlices';
+import { resetUser } from '../redux/userSlice';
 
 function Layout({ children }) {
     const [collapsed, setCollapsed] = useState(false);
-    const user = useSelector((state) => state.user?.user || null);
+    const { user } = useSelector((state) => state.user);
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -85,7 +85,7 @@ function Layout({ children }) {
             <div className='d-flex layout'>
                 <div className='sidebar'>
                     <div className='sidebar-header'>
-                        <h1 className='logo'>DocPoint</h1>
+                        <h1 className='logo'>DOCPOINT</h1>
                         <h1 className='role'>{role}</h1>
                     </div>
                     <div className='menu'>
@@ -98,17 +98,13 @@ function Layout({ children }) {
                                 </div>
                             );
                         })}
-                        <div className='d-flex menu-item logout' onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                         <div className='d-flex menu-item logout' onClick={handleLogout} style={{ cursor: 'pointer' }}>
                             <i className='ri-logout-circle-line' style={{ color: 'white' }}></i>
                             {!collapsed && <span style={{ color: 'white' }}>Logout</span>}
                         </div>
 
                     </div>
                 </div>
-
-
-
-
                 <div className="content">
                     <div className="header">
                         {collapsed ? (
@@ -122,7 +118,7 @@ function Layout({ children }) {
                         )}
 
                         <div className='d-flex align-items-center px-4'>
-                            <Badge count={user?.unseenNotifications?.length || 0} onClick={() => navigate('/notifications')}>
+                            <Badge count={user?.unseenNotifications.length} onClick={() => navigate('/notifications')}>
                                 <i className='ri-notification-line header-action-icon px-3'></i>
                             </Badge>
                             {!user?.isAdmin ? (
