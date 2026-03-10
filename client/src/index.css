@@ -1,132 +1,254 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-*{
-  font-family: 'Montserrat',sans-serif !important;
+.auth-page{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#2563eb,#0ea5e9);
+  position:relative;
+  overflow:hidden;
+  font-family:'Inter',sans-serif;
 }
 
-/* antd override */
+/* FLOATING SHAPES */
 
-
-.ant-picker-input input {
-  border : none !important;
+.auth-page::before{
+  content:"";
+  position:absolute;
+  width:500px;
+  height:500px;
+  background:rgba(255,255,255,0.08);
+  border-radius:50%;
+  top:-120px;
+  right:-120px;
+  animation:float1 12s infinite linear;
 }
 
-input{
-  border-radius: 0 !important;
-  border: 1px solid rgba(128, 128, 128, 0.558) !important;
-  height: 40px !important;
+.auth-page::after{
+  content:"";
+  position:absolute;
+  width:400px;
+  height:400px;
+  background:rgba(255,255,255,0.05);
+  border-radius:50%;
+  bottom:-100px;
+  left:-100px;
+  animation:float2 15s infinite linear;
 }
 
-input:focus , .ant-picker{
-  outline: none !important;
-  box-shadow: none !important;
-  border: 1px solid gray !important;
+/* FLOAT ANIMATION */
+
+@keyframes float1{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(40px)}
+  100%{transform:translateY(0)}
 }
 
-label{
-  font-size: 16px !important;
-  color: black !important;
+@keyframes float2{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-40px)}
+  100%{transform:translateY(0)}
 }
 
-.ant-form-item{
-  margin: 10px 0 !important;
+
+/* MAIN CONTAINER */
+
+.auth-container{
+  width:900px;
+  display:flex;
+
+  /* CHANGE 1 : white soften */
+  background:rgba(255,255,255,0.88);
+
+  backdrop-filter:blur(6px);
+
+  border-radius:16px;
+  overflow:hidden;
+
+  box-shadow:0 30px 60px rgba(0,0,0,0.25);
+
+  position:relative;
+  z-index:2;
+
+  animation:fadeIn 0.8s ease;
 }
 
-.ant-picker {
-  height: 40px !important;
-  border-radius: 0 !important;
-  border: 1px solid rgba(128, 128, 128, 0.558) !important;
-  height: 40px !important;
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
-/* common styling */
 
+/* LEFT PANEL */
 
-.page-title{
-  font-size: 25px;
-  color: black;
-  font-weight: bold;
+.auth-left{
+  flex:1;
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  color:white;
+  padding:60px 40px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
 }
 
-.spinner-parent{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0.7;
-  background-color: rgba(0,0,0,0.704);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  width: 100%;
-  height: 100%;
+/* DOCTOR ICON ANIMATION */
 
+.auth-left::after{
+  content:"🩺";
+  position:absolute;
+  bottom:40px;
+  right:40px;
+  font-size:60px;
+  animation:doctorFloat 4s infinite ease-in-out;
 }
 
-.spinner-border{
-  width: 5rem;
-  height: 5rem;
-  color: white !important;
+@keyframes doctorFloat{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+  100%{transform:translateY(0)}
 }
+
+/* BRAND */
+
+.brand{
+  font-size:42px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+
+/* TAGLINE */
+
+.tagline{
+  margin-top:15px;
+  font-size:18px;
+  opacity:0.9;
+  line-height:1.6;
+}
+
+
+/* RIGHT FORM AREA */
+
+.auth-right{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  /* CHANGE 2 : white reduce */
+  padding:50px;
+  background:rgba(255,255,255,0.65);
+}
+
+
+/* LOGIN CARD */
+
+.authentication-form{
+  width:100%;
+  max-width:320px;
+}
+
+
+/* TITLE */
 
 .card-title{
-  font-size: 22px;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.627);
+  font-size:26px;
+  font-weight:700;
+  margin-bottom:25px;
+  color:#111827;
 }
 
-.normal-text{
-  font-size: 1rem;
+
+/* LABELS */
+
+.authentication-form label{
+  font-size:15px !important;
+  font-weight:600;
+  color:#1f2937;
 }
 
-.card{
-  box-shadow: 0 0 2px grey;
-  border-radius: 0 !important;
+
+/* INPUT */
+
+.authentication-form input{
+  height:48px !important;
+  border-radius:10px !important;
+  border:1px solid #d1d5db !important;
+
+  font-size:15px !important;
+  font-weight:500;
+
+  padding-left:12px;
+
+  transition:0.25s;
 }
+
+.authentication-form input:focus{
+  border:1px solid #2563eb !important;
+
+  box-shadow:
+  0 0 0 3px rgba(37,99,235,0.18),
+  0 6px 14px rgba(0,0,0,0.08) !important;
+}
+
+
+/* BUTTON */
 
 .primary-button{
-    background-color: darkslategrey !important;
-    border-color: aqua !important;
-    height: 40px !important;
-    width: 100% !important;
-    color: white !important;
-    font-size: 16px !important;
-    width: max-content !important;
+  margin-top:12px;
+
+  background:linear-gradient(90deg,#2563eb,#1d4ed8) !important;
+
+  border:none !important;
+
+  height:48px !important;
+
+  border-radius:10px !important;
+
+  width:120px;
+
+  font-size:15px;
+
+  font-weight:600;
+
+  transition:0.25s;
 }
 
+.primary-button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(37,99,235,0.4);
+}
+
+
+/* LINK */
+
 .anchor{
-  color: black !important;
-  text-decoration: underline !important;
-  font-size: 16px !important;
-  cursor: pointer;
+  margin-left:15px;
+  font-size:14px;
+  color:#2563eb !important;
 }
 
 .anchor:hover{
-  text-decoration: underline !important;
+  text-decoration:underline;
 }
 
 
-/*authentication pages*/
+/* RESPONSIVE */
 
-.authentication{
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #005555;
+@media (max-width:768px){
+
+.auth-container{
+  flex-direction:column;
+  width:95%;
 }
 
-.authentication-form{
-  width: 400px;
+.auth-left{
+  text-align:center;
 }
 
-.authentication .card-title{
-  font-size: 1.5rem;
-  font-weight: bold;
-  background-color: orangered;
-  color:aliceblue !important;
-  max-width:max-content !important;
-  padding: 7px 15px;
-  margin-left: -40px;
-  border-bottom-left-radius: 10px;
 }

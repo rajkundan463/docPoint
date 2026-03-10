@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const doctorSchema =new mongoose.Schema(
-    {   
-        userId:{
+const doctorSchema = new mongoose.Schema(
+    {
+        userId: {
             type: String,
             required: true,
         },
@@ -19,33 +19,37 @@ const doctorSchema =new mongoose.Schema(
             required: true,
         },
         website: {
-          type: String,
-          required: true,
+            type: String,
+            required: true,
         },
         address: {
-         type: String,
-         required: true,
+            type: String,
+            required: true,
         },
         specialization: {
-         type: String,
-         required: true,
+            type: String,
+            required: true,
         },
         experience: {
             type: String,
             required: true,
         },
-        feePerCunsulatation: {
+        feePerConsultation: {
             type: Number,
-            required: true,
+            required: true
         },
-        timings:{
+        timings: {
             type: Array,
             required: true,
         },
-       status: {
+        profileImage: {
+            type: String,
+            required: true,
+        },
+        status: {
             type: String,
             default: "pending",
-       }
+        }
     },
     {
         timestamps: true,

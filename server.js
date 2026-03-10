@@ -17,13 +17,8 @@ app.use(cors());
 app.use(morgan("dev"));
 
 // Routes
-const userRoute = require("./routes/userRoutes");
-const adminRoute = require("./routes/adminRoute");
-const doctorRoute = require("./routes/doctorRoute");
-
-app.use("/api/user", userRoute);
-app.use("/api/admin", adminRoute);
-app.use("/api/doctor", doctorRoute);
+const registerRoutes = require("./routes/Index");
+registerRoutes(app);
 
 // REACT BUILD 
 const __dirname1 = path.resolve();

@@ -1,7 +1,6 @@
 const User = require("../models/userModel");
 const Doctor = require("../models/doctorModel");
 
-
 // GET ALL DOCTORS
 exports.getAllDoctors = async (req, res) => {
   try {

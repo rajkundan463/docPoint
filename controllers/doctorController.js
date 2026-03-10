@@ -8,7 +8,14 @@ const moment = require("moment");
 exports.getDoctorInfoByUserId = async (req, res) => {
   try {
 
-    const doctor = await Doctor.findOne({ userId: req.body.userId });
+    const doctor = await Doctor.findOne({ userId: req.userId });
+
+    if (!doctor) {
+      return res.status(404).send({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
 
     res.status(200).send({
       success: true,
@@ -17,11 +24,15 @@ exports.getDoctorInfoByUserId = async (req, res) => {
     });
 
   } catch (error) {
+
+    console.log("GetDoctorInfo Error:", error);
+
     res.status(500).send({
-      message: "Error getting doctor info",
       success: false,
+      message: "Error getting doctor info",
       error,
     });
+
   }
 };
 
@@ -31,7 +42,14 @@ exports.getDoctorInfoByUserId = async (req, res) => {
 exports.getDoctorInfoById = async (req, res) => {
   try {
 
-    const doctor = await Doctor.findOne({ _id: req.body.doctorId });
+    const doctor = await Doctor.findById(req.body.doctorId);
+
+    if (!doctor) {
+      return res.status(404).send({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
 
     res.status(200).send({
       success: true,
@@ -40,11 +58,15 @@ exports.getDoctorInfoById = async (req, res) => {
     });
 
   } catch (error) {
+
+    console.log("GetDoctorById Error:", error);
+
     res.status(500).send({
-      message: "Error getting doctor info",
       success: false,
+      message: "Error getting doctor info",
       error,
     });
+
   }
 };
 
@@ -55,10 +77,17 @@ exports.updateDoctorProfile = async (req, res) => {
   try {
 
     const doctor = await Doctor.findOneAndUpdate(
-      { userId: req.body.userId },
+      { userId: req.userId },
       req.body,
       { new: true }
     );
+
+    if (!doctor) {
+      return res.status(404).send({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
 
     res.status(200).send({
       success: true,
@@ -67,11 +96,15 @@ exports.updateDoctorProfile = async (req, res) => {
     });
 
   } catch (error) {
+
+    console.log("UpdateDoctor Error:", error);
+
     res.status(500).send({
-      message: "Error updating doctor profile",
       success: false,
+      message: "Error updating doctor profile",
       error,
     });
+
   }
 };
 
@@ -81,24 +114,35 @@ exports.updateDoctorProfile = async (req, res) => {
 exports.getAppointmentsByDoctorId = async (req, res) => {
   try {
 
-    const doctor = await Doctor.findOne({ userId: req.body.userId });
+    const doctor = await Doctor.findOne({ userId: req.userId });
+
+    if (!doctor) {
+      return res.status(404).send({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
 
     const appointments = await Appointment.find({
       doctorId: doctor._id,
     });
 
     res.status(200).send({
-      message: "Appointments fetched successfully",
       success: true,
+      message: "Appointments fetched successfully",
       data: appointments,
     });
 
   } catch (error) {
+
+    console.log("GetDoctorAppointments Error:", error);
+
     res.status(500).send({
-      message: "Error fetching appointments",
       success: false,
+      message: "Error fetching appointments",
       error,
     });
+
   }
 };
 
@@ -116,27 +160,42 @@ exports.changeAppointmentStatus = async (req, res) => {
       { new: true }
     );
 
-    const user = await User.findOne({ _id: appointment.userId });
+    if (!appointment) {
+      return res.status(404).send({
+        success: false,
+        message: "Appointment not found",
+      });
+    }
 
-    user.unseenNotifications.push({
-      type: "appointment-status-changed",
-      message: `Your appointment status has been ${status}`,
-      onClickPath: "/appointments",
-    });
+    const user = await User.findById(appointment.userId);
 
-    await user.save();
+    if (user) {
+
+      user.unseenNotifications.push({
+        type: "appointment-status-changed",
+        message: `Your appointment status has been ${status}`,
+        onClickPath: "/appointments",
+      });
+
+      await user.save();
+
+    }
 
     res.status(200).send({
-      message: "Appointment status changed successfully",
       success: true,
+      message: "Appointment status changed successfully",
     });
 
   } catch (error) {
+
+    console.log("ChangeAppointmentStatus Error:", error);
+
     res.status(500).send({
-      message: "Error changing appointment status",
       success: false,
+      message: "Error changing appointment status",
       error,
     });
+
   }
 };
 
@@ -158,10 +217,14 @@ exports.deleteOutdatedAppointments = async (req, res) => {
     });
 
   } catch (error) {
+
+    console.log("DeleteAppointments Error:", error);
+
     res.status(500).send({
       success: false,
       message: "Error deleting outdated appointments",
       error,
     });
+
   }
 };
