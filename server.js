@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 const express = require("express");
-const path = require("path");
 const cors = require("cors");
 const morgan = require("morgan");
 
@@ -11,27 +10,33 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
 
-// Request logger
+app.use(
+  cors({
+    origin: "*", 
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
+
+// Logger
 app.use(morgan("dev"));
+
+
+// Health check route 
+app.get("/", (req, res) => {
+  res.send("DocPoint API Running 🚀");
+});
+
 
 // Routes
 const registerRoutes = require("./routes/Index");
 registerRoutes(app);
 
-// REACT BUILD 
-const __dirname1 = path.resolve();
 
-app.use(express.static(path.join(__dirname1, "client/build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname1, "client/build", "index.html"));
-});
-
-// Error handling middleware
+// error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
   res.status(500).json({
     success: false,
     message: "Something went wrong",
@@ -39,13 +44,17 @@ app.use((err, req, res, next) => {
 });
 
 
+// PORT
 const PORT = process.env.PORT || 5000;
 
+
+// Connect DB and start server
 connectDB()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
-  }).catch((err) => {
+  })
+  .catch((err) => {
     console.log("Database connection failed:", err.message);
   });
